@@ -4,7 +4,7 @@ import 'package:instagram_clone_flutter/screens/home/newsfeed/newsfeed_appbar.da
 import 'package:instagram_clone_flutter/screens/home/newsfeed/newsfeed_image_card.dart';
 import 'package:instagram_clone_flutter/screens/home/newsfeed/newsfeed_video_card.dart';
 import 'package:instagram_clone_flutter/widgets/circular_image.dart';
-import 'package:instagram_clone_flutter/widgets/circular_image_with_border.dart';
+import 'package:instagram_clone_flutter/widgets/circular_image_with_gradient_border.dart';
 
 class Newsfeed extends StatefulWidget {
   const Newsfeed({super.key});

@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:instagram_clone_flutter/screens/home/newsfeed/newsfeed.dart';
+import 'package:instagram_clone_flutter/screens/home/search.dart';
+import 'package:instagram_clone_flutter/screens/home/uploadMedia/media_upload.dart';
 import 'package:instagram_clone_flutter/widgets/circular_image.dart';
 
 class Home extends StatefulWidget {
@@ -20,6 +22,8 @@ class _HomeState extends State<Home> {
     switch (selectedIndex) {
       case 0:
         return Newsfeed();
+      case 1:
+        return Search();
 
       default:
     }
@@ -32,6 +36,14 @@ class _HomeState extends State<Home> {
       body: screen(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            selectedIndex = index;
+          });
+          if (index == 2) {
+            Navigator.pushNamed(context, UploadMedia.tag);
+          }
+        },
         items: [
           BottomNavigationBarItem(
               icon: Icon(
@@ -60,11 +72,12 @@ class _HomeState extends State<Home> {
               ),
               label: ''),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_box_outlined,
-                color: Colors.black,
-              ),
-              label: ''),
+            icon: Icon(
+              Icons.add_box_outlined,
+              color: Colors.black,
+            ),
+            label: '',
+          ),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.smart_display_outlined,
@@ -102,11 +115,7 @@ class _HomeState extends State<Home> {
               ),
               label: '')
         ],
-        onTap: (value) {
-          setState(() {
-            selectedIndex = value;
-          });
-        },
+      
       ),
     );
   }

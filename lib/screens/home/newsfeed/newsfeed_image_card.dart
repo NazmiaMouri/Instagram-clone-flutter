@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone_flutter/widgets/circular_image_with_border.dart';
+import 'package:instagram_clone_flutter/widgets/circular_image_with_gradient_border.dart';
 
 class NewsFeedImageCard extends StatelessWidget {
   const NewsFeedImageCard({super.key});
@@ -40,14 +40,27 @@ class NewsFeedImageCard extends StatelessWidget {
         ),
         Image.network(
           "https://i.imgur.com/OB0y6MR.jpg",
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return child;
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+            
+          },
           // headers: prefManager.httpHeaders,
         ),
         SizedBox(
           height: 5,
         ),
-        Padding(
+        const Padding(
           padding: const EdgeInsets.all(10),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
