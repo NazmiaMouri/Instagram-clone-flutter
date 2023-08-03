@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:instagram_clone_flutter/screens/home/newsfeed/newsfeed.dart';
-import 'package:instagram_clone_flutter/screens/home/search.dart';
+import 'package:instagram_clone_flutter/screens/home/search/search.dart';
 import 'package:instagram_clone_flutter/screens/home/uploadMedia/media_upload.dart';
 import 'package:instagram_clone_flutter/widgets/circular_image.dart';
 
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
               ),
               label: '')
         ],
-      
+
       ),
     );
   }
