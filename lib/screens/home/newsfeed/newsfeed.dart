@@ -73,7 +73,7 @@ class _NewsfeedState extends State<Newsfeed> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               CircularImageWithBorder(
-                                backgroundImageURL: 'lib/assets/images/desktop.png',
+                                backgroundImageURL: 'lib/assets/images/no_user.png',
                                 foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg",
                                 width: 80,
                                 height: 80,
@@ -93,7 +93,7 @@ class _NewsfeedState extends State<Newsfeed> {
                 ],
               ),
             ),
-            NewsFeedImageCard(),
+            NewsFeedImageCard(foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg"),
             NewsFeedVideoCard()
           ],
         ),

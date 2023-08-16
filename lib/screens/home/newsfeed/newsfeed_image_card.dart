@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/widgets/circular_image_with_gradient_border.dart';
 
 class NewsFeedImageCard extends StatelessWidget {
-  const NewsFeedImageCard({super.key});
+  const NewsFeedImageCard({required this.foregroundImageURL, super.key});
+  final foregroundImageURL;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class NewsFeedImageCard extends StatelessWidget {
               Row(
                 children: [
                   CircularImageWithBorder(
-                    backgroundImageURL: 'lib/assets/images/desktop.png',
-                    foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg",
+                    backgroundImageURL: 'lib/assets/images/no_user.png',
+                    foregroundImageURL: foregroundImageURL,
                     width: 40,
                     height: 40,
                   ),
@@ -44,16 +45,37 @@ class NewsFeedImageCard extends StatelessWidget {
             if (loadingProgress == null) {
               return child;
             }
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                    : null,
+            return Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
               ),
             );
-            
           },
-          // headers: prefManager.httpHeaders,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.report_gmailerrorred_outlined, color: Colors.grey, size: 40),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("Sorry, couldn't load image.", style: TextStyle(color: Colors.grey))
+                ],
+              ),
+            );
+          },
         ),
         SizedBox(
           height: 5,

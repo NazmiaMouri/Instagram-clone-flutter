@@ -20,7 +20,7 @@ class _SearchState extends State<Search> {
         body: GridView.custom(
           shrinkWrap: true,
 
-         
+
           gridDelegate: SliverQuiltedGridDelegate(
             crossAxisCount: 4,
             mainAxisSpacing: 4,

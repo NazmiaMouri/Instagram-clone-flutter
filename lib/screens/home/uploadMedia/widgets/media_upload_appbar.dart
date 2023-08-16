@@ -24,7 +24,13 @@ class MediaUploadAppbar extends StatelessWidget implements PreferredSizeWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text("New post")
+                Text(
+                  "New post",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
               ],
             ),
             InkWell(

@@ -81,8 +81,12 @@ class _NewsFeedVideoCardState extends State<NewsFeedVideoCard> {
                 } else {
                   // If the VideoPlayerController is still initializing, show a
                   // loading spinner.
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 }
               },
