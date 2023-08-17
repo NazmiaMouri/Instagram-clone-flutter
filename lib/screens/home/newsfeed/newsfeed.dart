@@ -16,16 +16,15 @@ class Newsfeed extends StatefulWidget {
 class _NewsfeedState extends State<Newsfeed> {
   List listItem = List.generate(10, (index) => index);
   bool _isLoading = false;
-  late ScrollController listViewController;
+  ScrollController listViewController = ScrollController();
   @override
   void initState() {
     super.initState();
-    listViewController = ScrollController();
+
     listViewController.addListener(_scrollListener);
   }
 
   void _scrollListener() {
-    print(listViewController.position.pixels);
     if (listViewController.position.pixels == listViewController.position.maxScrollExtent) {
       // Reached the bottom, load more content
       _loadMoreItems();
@@ -42,7 +41,7 @@ class _NewsfeedState extends State<Newsfeed> {
       // Simulate loading delay
       await Future.delayed(Duration(seconds: 2));
 
-      List<String> newItems = List.generate(10, (index) => 'New Item ${listItem.length + index}');
+      List<int> newItems = List.generate(10, (index) => listItem.length + index);
       setState(() {
         listItem.addAll(newItems);
         _isLoading = false;
@@ -62,6 +61,7 @@ class _NewsfeedState extends State<Newsfeed> {
     return Scaffold(
       appBar: NewsFeedAppbar(),
       body: SingleChildScrollView(
+        controller: listViewController,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -139,7 +139,6 @@ class _NewsfeedState extends State<Newsfeed> {
             ),
             //=========================Newsfeed POST=========================
             ListView.builder(
-                controller: listViewController,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: listItem.length + 1,
@@ -152,7 +151,9 @@ class _NewsfeedState extends State<Newsfeed> {
                     }
                   } else {
                     if (_isLoading) {
-                      return CircularProgressIndicator();
+                      return Container(
+                        child: Center(child: CircularProgressIndicator()),
+                      );
                     }
                   }
                 })
