@@ -14,6 +14,49 @@ class Newsfeed extends StatefulWidget {
 }
 
 class _NewsfeedState extends State<Newsfeed> {
+  List listItem = List.generate(10, (index) => index);
+  bool _isLoading = false;
+  late ScrollController listViewController;
+  @override
+  void initState() {
+    super.initState();
+    listViewController = ScrollController();
+    listViewController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    print(listViewController.position.pixels);
+    if (listViewController.position.pixels == listViewController.position.maxScrollExtent) {
+      // Reached the bottom, load more content
+      _loadMoreItems();
+    }
+  }
+
+  Future<void> _loadMoreItems() async {
+    print('POPO');
+    if (!_isLoading) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Simulate loading delay
+      await Future.delayed(Duration(seconds: 2));
+
+      List<String> newItems = List.generate(10, (index) => 'New Item ${listItem.length + index}');
+      setState(() {
+        listItem.addAll(newItems);
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    listViewController.removeListener(_scrollListener);
+    listViewController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +65,7 @@ class _NewsfeedState extends State<Newsfeed> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            //===========================StoryLines========================
             Container(
               height: 140,
               child: ListView(
@@ -93,8 +137,25 @@ class _NewsfeedState extends State<Newsfeed> {
                 ],
               ),
             ),
-            NewsFeedImageCard(foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg"),
-            NewsFeedVideoCard()
+            //=========================Newsfeed POST=========================
+            ListView.builder(
+                controller: listViewController,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: listItem.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < listItem.length) {
+                    if (listItem[index] % 2 == 0) {
+                      return NewsFeedImageCard(foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg");
+                    } else {
+                      return NewsFeedVideoCard();
+                    }
+                  } else {
+                    if (_isLoading) {
+                      return CircularProgressIndicator();
+                    }
+                  }
+                })
           ],
         ),
       ),
