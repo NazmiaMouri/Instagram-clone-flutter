@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone_flutter/screens/home/search/search_appBar.dart';
 
@@ -10,17 +11,49 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  late ScrollController gridViewController;
+  bool _showAppBar = true;
 
+  @override
+  void initState() {
+    super.initState();
+    gridViewController = ScrollController();
+
+    // Listen to scroll events and update the visibility of the app bar
+    gridViewController.addListener(_handleScroll);
+  }
+
+  void _handleScroll() {
+    if (gridViewController.position.userScrollDirection == ScrollDirection.reverse) {
+      if (_showAppBar) {
+        setState(() {
+          _showAppBar = false;
+        });
+      }
+    } else {
+      if (!_showAppBar) {
+        setState(() {
+          _showAppBar = true;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    gridViewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SearchAppbar(),
+        appBar: _showAppBar ? SearchAppbar() : null,
+        extendBody: true,
         body: GridView.custom(
+          controller: gridViewController,
           shrinkWrap: true,
-
-
           gridDelegate: SliverQuiltedGridDelegate(
             crossAxisCount: 4,
             mainAxisSpacing: 4,
