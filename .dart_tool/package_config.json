@@ -279,39 +279,39 @@
     },
     {
       "name": "path_provider",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider-2.0.14",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_android-2.0.24",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_android-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_foundation-2.2.1",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_linux",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_linux-2.1.10",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_platform_interface",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.0.6",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_windows",
-      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_windows-2.1.5",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "permission_handler",
@@ -470,7 +470,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-08-20T06:08:06.207830Z",
+  "generated": "2023-08-23T03:47:24.153867Z",
   "generator": "pub",
   "generatorVersion": "3.0.1"
 }

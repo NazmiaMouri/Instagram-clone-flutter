@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/screens/home/uploadMedia/widgets/media_upload_appbar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UploadMedia extends StatefulWidget {
   const UploadMedia({super.key});
@@ -13,19 +15,36 @@ class UploadMedia extends StatefulWidget {
 
 class _UploadMediaState extends State<UploadMedia> {
   List<String> imageFile = [];
+  Directory? _tempDirectory;
+  Future<Directory?>? _appSupportDirectory;
+  Future<Directory?>? _appLibraryDirectory;
+  Future<Directory?>? _appDocumentsDirectory;
+  Future<Directory?>? _appCacheDirectory;
+  Future<Directory?>? _externalDocumentsDirectory;
+  Future<List<Directory>?>? _externalStorageDirectories;
+  Future<List<Directory>?>? _externalCacheDirectories;
+  Future<Directory?>? _downloadsDirectory;
+
   final Directory _photoDir =
       new Directory('/storage/emulated/0/Android/data/com.eclixtech.doc_scanner/files/CroppedImages');
   var imageList = [];
   @override
   void initState() {
-    _getFromCamera();
+    // _getFromCamera();
+    getpath();
     // TODO: implement initState
     super.initState();
   }
 
+  void getpath() async {
+    _tempDirectory = await getApplicationDocumentsDirectory();
+
+    var path = _tempDirectory?.path;
+    print(path);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(imageFile.length);
     return Scaffold(
       appBar: MediaUploadAppbar(),
       body: Stack(
