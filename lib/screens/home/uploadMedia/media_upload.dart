@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_storage_path/flutter_storage_path.dart';
+import 'package:instagram_clone_flutter/models/image_file_model.dart';
 import 'package:instagram_clone_flutter/screens/home/uploadMedia/widgets/media_upload_appbar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class UploadMedia extends StatefulWidget {
   const UploadMedia({super.key});
@@ -14,33 +16,24 @@ class UploadMedia extends StatefulWidget {
 }
 
 class _UploadMediaState extends State<UploadMedia> {
-  List<String> imageFile = [];
-  Directory? _tempDirectory;
-  Future<Directory?>? _appSupportDirectory;
-  Future<Directory?>? _appLibraryDirectory;
-  Future<Directory?>? _appDocumentsDirectory;
-  Future<Directory?>? _appCacheDirectory;
-  Future<Directory?>? _externalDocumentsDirectory;
-  Future<List<Directory>?>? _externalStorageDirectories;
-  Future<List<Directory>?>? _externalCacheDirectories;
-  Future<Directory?>? _downloadsDirectory;
-
-  final Directory _photoDir =
-      new Directory('/storage/emulated/0/Android/data/com.eclixtech.doc_scanner/files/CroppedImages');
-  var imageList = [];
+  List<ImageFileModel> _files = [];
+  ImageFileModel? _selectedModel;
+  String? image;
   @override
   void initState() {
-    // _getFromCamera();
-    getpath();
-    // TODO: implement initState
     super.initState();
+    getImagesPath();
   }
 
-  void getpath() async {
-    _tempDirectory = await getApplicationDocumentsDirectory();
-
-    var path = _tempDirectory?.path;
-    print(path);
+  getImagesPath() async {
+    var imagePath = await StoragePath.imagesPath;
+    var images = jsonDecode(imagePath!) as List;
+    _files = images.map<ImageFileModel>((e) => ImageFileModel.fromJson(e)).toList();
+    if (_files.length > 0)
+      setState(() {
+        _selectedModel = _files[0];
+        image = _selectedModel?.files?[0];
+      });
   }
 
   @override
@@ -50,13 +43,13 @@ class _UploadMediaState extends State<UploadMedia> {
       body: Stack(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height / 2,
-            color: Colors.red,
-            child: Card(
-              color: Colors.amber,
-              child: Center(child: Text('index')),
-            ),
-          ),
+              height: MediaQuery.of(context).size.height / 2,
+              color: Colors.black45,
+              child: image != null
+                  ? Image.file(
+                      File(image!),
+                    )
+                  : Container()),
           DraggableScrollableSheet(
             initialChildSize: 0.5, // Initial size of the sheet
             minChildSize: 0.5, // Minimum size the sheet can be dragged to
@@ -72,15 +65,48 @@ class _UploadMediaState extends State<UploadMedia> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         InkWell(
-                          child: Row(children: [
-                            Text(
-                              'Recent',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2<ImageFileModel>(
+                              isExpanded: true,
+                              hint: Text(
+                                'Select Item',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              ),
+                              items: _files
+                                  .map((ImageFileModel item) => DropdownMenuItem<ImageFileModel>(
+                                        value: item,
+                                        child: Text(
+                                          item.folder!,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              value: _selectedModel,
+                              onChanged: (ImageFileModel? value) {
+                                setState(() {
+                                  _selectedModel = value;
+                                });
+                              },
+                              buttonStyleData: const ButtonStyleData(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                height: 40,
+                                width: 140,
+                              ),
+                              iconStyleData: IconStyleData(
+                                icon: Icon(
+                                  Icons.expand_more_outlined,
+                                ),
+                              ),
+                              menuItemStyleData: const MenuItemStyleData(
+                                height: 40,
+                              ),
                             ),
-                            Icon(
-                              Icons.expand_more_outlined,
-                            ),
-                          ]),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -127,13 +153,44 @@ class _UploadMediaState extends State<UploadMedia> {
                           physics: ScrollPhysics(),
                           shrinkWrap: true,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                          ),
-                          itemCount: 300,
+                              crossAxisCount: 4, crossAxisSpacing: 2, mainAxisSpacing: 2),
+                          itemCount: _selectedModel?.files?.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              color: Colors.amber,
-                              child: Center(child: Text('$index')),
+                            var file = _selectedModel?.files?[index];
+                            return Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                GestureDetector(
+                                  child: file != null
+                                      ? Image.file(
+                                          File(file),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Container(
+                                        color: Colors.black45,
+                                      ),
+                                  onTap: () {
+                                    setState(() {
+                                      image = file;
+                                    });
+                                  },
+                                ),
+                                Positioned(
+                                  right: 2,
+                                  top: 2,
+                                  child: Icon(Icons.circle_outlined, color: Colors.white),
+                                ),
+                                Positioned(
+                                  right: 2,
+                                  top: 2,
+                                  child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+                                  ),
+                                )
+                              ],
                             );
                           }),
                     ),
@@ -145,18 +202,5 @@ class _UploadMediaState extends State<UploadMedia> {
         ],
       ),
     );
-  }
-
-  /// Get from Camera
-  _getFromCamera() async {
-    imageList =
-        _photoDir.listSync().map((item) => item.path).where((item) => item.endsWith(".jpg")).toList(growable: false);
-    // List<XFile> pickedFile = await ImagePicker().pickMultiImage(
-    //   maxWidth: 1800,
-    //   maxHeight: 1800,
-    // );
-    // setState(() {
-    //   imageFile = pickedFile.map((e) => e.path).toList();
-    // });
   }
 }

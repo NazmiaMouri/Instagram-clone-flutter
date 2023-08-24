@@ -20,6 +20,11 @@ class MediaUploadAppbar extends StatelessWidget implements PreferredSizeWidget {
                   child: Icon(
                     Icons.close_outlined,
                   ),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                  
+                  },
                 ),
                 SizedBox(
                   width: 20,

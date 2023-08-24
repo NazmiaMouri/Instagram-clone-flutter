@@ -147,7 +147,7 @@ class _NewsfeedState extends State<Newsfeed> {
                     if (listItem[index] % 2 == 0) {
                       return NewsFeedImageCard(foregroundImageURL: "https://i.imgur.com/OB0y6MR.jpg");
                     } else {
-                      return NewsFeedVideoCard();
+                      // return NewsFeedVideoCard();
                     }
                   } else {
                     if (_isLoading) {

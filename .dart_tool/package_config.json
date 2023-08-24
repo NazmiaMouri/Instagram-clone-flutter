@@ -56,6 +56,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "dropdown_button2",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/dropdown_button2-2.3.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "extended_list",
       "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/extended_list-3.0.0",
       "packageUri": "lib/",
@@ -130,6 +136,12 @@
     {
       "name": "flutter_staggered_grid_view",
       "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_storage_path",
+      "rootUri": "file:///home/nazmia/.pub-cache/hosted/pub.dev/flutter_storage_path-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -470,7 +482,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-08-23T03:47:24.153867Z",
+  "generated": "2023-08-24T10:02:21.772738Z",
   "generator": "pub",
   "generatorVersion": "3.0.1"
 }
